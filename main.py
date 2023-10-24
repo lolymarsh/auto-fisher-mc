@@ -1,8 +1,4 @@
-import cv2
-import numpy as np
-import pyautogui
-import time
-import win32gui, win32api, win32con
+import cv2, sys, numpy as np, pyautogui, time, win32gui, win32api, win32con
 
 # ฟังก์ชันคลิกขวาค้าง
 def right_click_and_hold(x, y, win):
@@ -21,12 +17,16 @@ def one_right_click(x, y, win):
     win32gui.SendMessage(win, win32con.WM_RBUTTONUP, win32con.MK_RBUTTON, MouseXY)
 
 try:
-    for i in range(3, 0, -1):
+    for i in range(5, 0, -1):
         print(f"bot is starting in {i}")
         time.sleep(1)
 
     cv2.startWindowThread()
     win = win32gui.FindWindow(None,'Minecraft Forge* 1.20.1 - Multiplayer (3rd-party Server)') # 1378474
+
+    if win == 0:
+        print("Window not found. Exiting...")
+        sys.exit(1)
 
     win_size = win32gui.GetWindowRect(win)
 
