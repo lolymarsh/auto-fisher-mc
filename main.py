@@ -4,42 +4,35 @@ import pyautogui
 import time
 import win32gui, win32api, win32con
 
-# คลิกขวาค้าง
+# ฟังก์ชันคลิกขวาค้าง
 def right_click_and_hold(x, y, win):
-    # win32api.mouse_event(win32con.WM_RBUTTONDOWN, x, y, 0, 0)
     MouseXY = win32api.MAKELONG(x, y)
     win32gui.SendMessage(win, win32con.WM_RBUTTONDOWN, win32con.MK_RBUTTON, MouseXY)
 
-# ฟังก์ชันปล่อยคลิกค้าง
+# ฟังก์ชันปล่อยคลิกขวาค้าง
 def release_right_click(x,y, win):
-    # win32api.mouse_event(win32con.WM_RBUTTONUP, x, y, 0, 0)
     MouseXY = win32api.MAKELONG(x, y)
     win32gui.SendMessage(win, win32con.WM_RBUTTONUP, win32con.MK_RBUTTON, MouseXY)
 
+# ฟังก์ชันคลิกขวา
 def one_right_click(x, y, win):
-    # win32api.MAKELONG(x, y)
-    # win32api.mouse_event(win32con.WM_RBUTTONDOWN, x, y, 0, 0)
-    # win32api.mouse_event(win32con.WM_RBUTTONUP, x, y, 0, 0)
     MouseXY = win32api.MAKELONG(x, y)
     win32gui.SendMessage(win, win32con.WM_RBUTTONDOWN, win32con.MK_RBUTTON, MouseXY)
     win32gui.SendMessage(win, win32con.WM_RBUTTONUP, win32con.MK_RBUTTON, MouseXY)
 
 try:
-    print("bot is starting in 3")
-    time.sleep(1)
-    print("bot is starting in 2")
-    time.sleep(1)
-    print("bot is starting in 1")
+    for i in range(3, 0, -1):
+        print(f"bot is starting in {i}")
+        time.sleep(1)
 
     cv2.startWindowThread()
-
     win = win32gui.FindWindow(None,'Minecraft Forge* 1.20.1 - Multiplayer (3rd-party Server)') # 1378474
 
     win_size = win32gui.GetWindowRect(win)
 
     x, y,width,height = win_size[0], win_size[1], 850, 600
 
-            # อ่านรูปภาพที่ต้องการค้นหา
+    # อ่านรูปภาพที่ต้องการค้นหา
     template = cv2.imread('./images/splashing.PNG')
     found_template = cv2.imread('./images/found.PNG')
     starting_holdrightclick_template = cv2.imread('./images/startholdclick.PNG')
