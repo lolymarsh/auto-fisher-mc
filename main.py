@@ -1,4 +1,5 @@
-import cv2, sys, numpy as np, pyautogui, time, win32gui, win32api, win32con
+import cv2, sys, numpy as np, time, win32gui, win32api, win32con
+from PIL import ImageGrab
 
 # ฟังก์ชันคลิกขวาค้าง
 def right_click_and_hold(x, y, win):
@@ -24,7 +25,7 @@ try:
     cv2.startWindowThread()
     win = win32gui.FindWindow(None,'Minecraft Forge* 1.20.1 - Multiplayer (3rd-party Server)') # 1378474
 
-    if win == 0:
+    if win <= 3000000:
         print("Window not found. Exiting...")
         sys.exit(1)
 
@@ -47,11 +48,8 @@ try:
     # win32api.SetCursorPos((x, y))
     
     while True:
-        # ดึงภาพหน้าจอปัจจุบัน
-        screenshot = np.array(pyautogui.screenshot())
-
         # ดึงภาพหน้าจอของเกม Minecraft ตามขอบเขตที่กำหนด
-        game_screenshot = screenshot[y:y + height, x:x + width]
+        game_screenshot = np.array(ImageGrab.grab(bbox=(x, y, x + width, y + height)))
        
         # ค้นหารูปภาพที่ต้องการบนหน้าจอ
         result = cv2.matchTemplate(game_screenshot, template, cv2.TM_CCOEFF_NORMED)
@@ -79,8 +77,10 @@ try:
 
         main_capcha = cv2.matchTemplate(game_screenshot, main_capcha_template, cv2.TM_CCOEFF_NORMED)
         min_val9, max_val9, min_loc9, max_loc9 = cv2.minMaxLoc(main_capcha)
+
         # โชว์จอเกม
-        # cv2.imshow('Minecraft Screenshot', game_screenshot)
+        cv2.imshow('Minecraft Screenshot', game_screenshot)
+
         if max_val9 >= 0.5:
             print("Found Capcha")
             release_right_click(x,y, win)
