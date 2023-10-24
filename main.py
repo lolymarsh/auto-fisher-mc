@@ -25,10 +25,6 @@ try:
     cv2.startWindowThread()
     win = win32gui.FindWindow(None,'Minecraft Forge* 1.20.1 - Multiplayer (3rd-party Server)') # 1378474
 
-    if win <= 3000000:
-        print("Window not found. Exiting...")
-        sys.exit(1)
-
     win_size = win32gui.GetWindowRect(win)
 
     x, y,width,height = win_size[0], win_size[1], 850, 600
@@ -79,7 +75,7 @@ try:
         min_val9, max_val9, min_loc9, max_loc9 = cv2.minMaxLoc(main_capcha)
 
         # โชว์จอเกม
-        cv2.imshow('Minecraft Screenshot', game_screenshot)
+        # cv2.imshow('Minecraft Screenshot', game_screenshot)
 
         if max_val9 >= 0.5:
             print("Found Capcha")
