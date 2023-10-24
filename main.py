@@ -18,7 +18,7 @@ def one_right_click(x, y, win):
 
 try:
     for i in range(5, 0, -1):
-        print(f"bot is starting in {i}")
+        print(f"Auto Fisher Starting in {i}")
         time.sleep(1)
 
     cv2.startWindowThread()
@@ -77,14 +77,6 @@ try:
         result6 = cv2.matchTemplate(game_screenshot, found_redbar3_template, cv2.TM_CCOEFF_NORMED)
         min_val6, max_val6, min_loc6, max_loc6 = cv2.minMaxLoc(result6)
 
-        # found_sucess_template
-        # result7 = cv2.matchTemplate(game_screenshot, found_sucess_template, cv2.TM_CCOEFF_NORMED)
-        # min_val7, max_val7, min_loc7, max_loc7 = cv2.minMaxLoc(result7)
-
-        # found_failed_template
-        # result8 = cv2.matchTemplate(game_screenshot, found_failed_template, cv2.TM_CCOEFF_NORMED)
-        # min_val8, max_val8, min_loc8, max_loc8 = cv2.minMaxLoc(result8)
-
         main_capcha = cv2.matchTemplate(game_screenshot, main_capcha_template, cv2.TM_CCOEFF_NORMED)
         min_val9, max_val9, min_loc9, max_loc9 = cv2.minMaxLoc(main_capcha)
         # โชว์จอเกม
@@ -122,13 +114,6 @@ try:
             release_right_click(x,y, win)
             time.sleep(3)
             right_click_and_hold(x,y, win)
-        # elif max_val7 >= 0.45:
-        #     print("Success Released Right-clicking...")
-        #     release_right_click()
-        # elif max_val8 >= 0.45:
-        #     print("Failed Released Right-clicking...")
-        #     release_right_click()
-
 
         cv2.waitKey(1)
         
