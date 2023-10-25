@@ -46,36 +46,37 @@ try:
     while True:
         # ดึงภาพหน้าจอของเกม Minecraft ตามขอบเขตที่กำหนด
         game_screenshot = np.array(ImageGrab.grab(bbox=(x, y, x + width, y + height)))
+        bgr_screenshot = cv2.cvtColor(game_screenshot, cv2.COLOR_RGB2BGR)
        
         # ค้นหารูปภาพที่ต้องการบนหน้าจอ
-        result = cv2.matchTemplate(game_screenshot, template, cv2.TM_CCOEFF_NORMED)
+        result = cv2.matchTemplate(bgr_screenshot, template, cv2.TM_CCOEFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
 
         # found_template
-        result2 = cv2.matchTemplate(game_screenshot, found_template, cv2.TM_CCOEFF_NORMED)
+        result2 = cv2.matchTemplate(bgr_screenshot, found_template, cv2.TM_CCOEFF_NORMED)
         min_val2, max_val2, min_loc2, max_loc2 = cv2.minMaxLoc(result2)
 
         # starting_holdrightclick_template
-        result3 = cv2.matchTemplate(game_screenshot, starting_holdrightclick_template, cv2.TM_CCOEFF_NORMED)
+        result3 = cv2.matchTemplate(bgr_screenshot, starting_holdrightclick_template, cv2.TM_CCOEFF_NORMED)
         min_val3, max_val3, min_loc3, max_loc3 = cv2.minMaxLoc(result3)
 
         # found_redbar_template
-        result4 = cv2.matchTemplate(game_screenshot, found_redbar_template, cv2.TM_CCOEFF_NORMED)
+        result4 = cv2.matchTemplate(bgr_screenshot, found_redbar_template, cv2.TM_CCOEFF_NORMED)
         min_val4, max_val4, min_loc4, max_loc4 = cv2.minMaxLoc(result4)
 
         # found_redbar2_template
-        result5 = cv2.matchTemplate(game_screenshot, found_redbar2_template, cv2.TM_CCOEFF_NORMED)
+        result5 = cv2.matchTemplate(bgr_screenshot, found_redbar2_template, cv2.TM_CCOEFF_NORMED)
         min_val5, max_val5, min_loc5, max_loc5 = cv2.minMaxLoc(result5)
 
         # found_redbar3_template
-        result6 = cv2.matchTemplate(game_screenshot, found_redbar3_template, cv2.TM_CCOEFF_NORMED)
+        result6 = cv2.matchTemplate(bgr_screenshot, found_redbar3_template, cv2.TM_CCOEFF_NORMED)
         min_val6, max_val6, min_loc6, max_loc6 = cv2.minMaxLoc(result6)
 
-        main_capcha = cv2.matchTemplate(game_screenshot, main_capcha_template, cv2.TM_CCOEFF_NORMED)
+        main_capcha = cv2.matchTemplate(bgr_screenshot, main_capcha_template, cv2.TM_CCOEFF_NORMED)
         min_val9, max_val9, min_loc9, max_loc9 = cv2.minMaxLoc(main_capcha)
 
         # โชว์จอเกม
-        # cv2.imshow('Minecraft Screenshot', game_screenshot)
+        # cv2.imshow('Minecraft Screenshot', bgr_screenshot)
 
         if max_val9 >= 0.5:
             print("Found Capcha")
