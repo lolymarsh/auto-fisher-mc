@@ -1,6 +1,13 @@
 import cv2, numpy as np, time, win32gui, win32api, win32con, win32ui
 from PIL import ImageGrab
 
+cv2.startWindowThread()
+win = win32gui.FindWindow(None,'Minecraft Forge* 1.20.1 - Multiplayer (3rd-party Server)') # 1378474
+
+win_size = win32gui.GetWindowRect(win)
+
+x, y,width,height = win_size[0], win_size[1], 850, 600
+
 # ฟังก์ชันคลิกขวาค้าง
 def HoldRightClick(x, y, win):
     MouseXY = win32api.MAKELONG(x, y)
@@ -40,18 +47,75 @@ def FindCV2EIEI(hwnd, width, height):
         win32gui.ReleaseDC(hwnd, wDC)
         win32gui.DeleteObject(dataBitMap.GetHandle())
 
+def CapchaEIEI():
+    # รูปที่เจอ
+    found_feather = cv2.imread('./images/capcha/found_feater.PNG')
+    found_pufferfish = cv2.imread('./images/capcha/found_pufferfish.PNG')
+    found_snow_ball = cv2.imread('./images/capcha/found_snow_ball.PNG')
+    # รูปที่เป็นคำตอบ
+    click_feather = cv2.imread('./images/capcha/click_feather.PNG')
+    click_pufferfish = cv2.imread('./images/capcha/click_pufferfish.PNG')
+    click_snow_ball = cv2.imread('./images/capcha/click_snow_ball.PNG')
+
+    while True:
+        # print("Searching...")
+        game_recapcha_screenshot = np.array(ImageGrab.grab(bbox=(x, y, x + width, y + height)))
+        recapcha_bgr_screenshot = cv2.cvtColor(game_recapcha_screenshot, cv2.COLOR_RGB2BGR)
+
+        fix_feather = cv2.matchTemplate(recapcha_bgr_screenshot, found_feather, cv2.TM_CCOEFF_NORMED)
+        min_val1, max_val1, min_loc1, max_loc1 = cv2.minMaxLoc(fix_feather)
+
+        click_fix_feather = cv2.matchTemplate(recapcha_bgr_screenshot, click_feather, cv2.TM_CCOEFF_NORMED)
+        min_val2, max_val2, min_loc2, max_loc2 = cv2.minMaxLoc(click_fix_feather)
+
+        fix_pufferfish = cv2.matchTemplate(recapcha_bgr_screenshot, found_pufferfish, cv2.TM_CCOEFF_NORMED)
+        min_val3, max_val3, min_loc3, max_loc3 = cv2.minMaxLoc(fix_pufferfish)
+
+        click_fix_pufferfish = cv2.matchTemplate(recapcha_bgr_screenshot, click_pufferfish, cv2.TM_CCOEFF_NORMED)
+        min_val4, max_val4, min_loc4, max_loc4 = cv2.minMaxLoc(click_fix_pufferfish)
+
+        fix_snow_ball = cv2.matchTemplate(recapcha_bgr_screenshot, found_snow_ball, cv2.TM_CCOEFF_NORMED)
+        min_val5, max_val5, min_loc5, max_loc5 = cv2.minMaxLoc(fix_snow_ball)
+
+        click_fix_snowball = cv2.matchTemplate(recapcha_bgr_screenshot, click_snow_ball, cv2.TM_CCOEFF_NORMED)
+        min_val6, max_val6, min_loc6, max_loc6 = cv2.minMaxLoc(click_fix_snowball)
+
+        print(max_val5)
+
+        if max_val1 >= 0.7:
+            print("Found Feather")
+            target_x = x + max_loc2[0] + 15
+            target_y = y + max_loc2[1] + 15
+            ClickXY = win32api.MAKELONG(target_x, target_y)
+            win32gui.SendMessage(win, win32con.WM_LBUTTONDOWN, win32con.MK_LBUTTON, ClickXY)
+            win32gui.SendMessage(win, win32con.WM_LBUTTONUP, win32con.MK_LBUTTON, ClickXY)
+            print("Clicked...")
+            time.sleep(2)
+        if max_val3 >= 0.7:
+            print("Found Pufferfish")
+            target_x = x + max_loc4[0] + 15
+            target_y = y + max_loc4[1] + 15
+            ClickXY = win32api.MAKELONG(target_x, target_y)
+            win32gui.SendMessage(win, win32con.WM_LBUTTONDOWN, win32con.MK_LBUTTON, ClickXY)
+            win32gui.SendMessage(win, win32con.WM_LBUTTONUP, win32con.MK_LBUTTON, ClickXY)
+            print("Clicked...")
+            time.sleep(2)
+        if max_val5 >= 0.7:
+            print("Found Snowball")
+            target_x = x + max_loc6[0] + 15
+            target_y = y + max_loc6[1] + 15
+            print(target_x)
+            print(target_y)
+            ClickXY = win32api.MAKELONG(target_x, target_y)
+            win32gui.SendMessage(win, win32con.WM_LBUTTONDOWN, win32con.MK_LBUTTON, ClickXY)
+            win32gui.SendMessage(win, win32con.WM_LBUTTONUP, win32con.MK_LBUTTON, ClickXY)
+            print("Clicked...")
+            time.sleep(2)
 
 try:
-    for i in range(5, 0, -1):
+    for i in range(2, 0, -1):
         print(f"Auto Fisher Starting in {i}")
         time.sleep(1)
-
-    cv2.startWindowThread()
-    win = win32gui.FindWindow(None,'Minecraft Forge* 1.20.1 - Multiplayer (3rd-party Server)') # 1378474
-
-    win_size = win32gui.GetWindowRect(win)
-
-    x, y,width,height = win_size[0], win_size[1], 850, 600
 
     # อ่านรูปภาพที่ต้องการค้นหา
     template = cv2.imread('./images/splashing.PNG')
@@ -63,13 +127,11 @@ try:
     found_failed_template = cv2.imread('./images/failed.PNG')
     found_sucess_template = cv2.imread('./images/success.PNG')
     main_capcha_template = cv2.imread('./images/maincapcha.PNG')
-
-    game_region = (x, y, width, height)
-    # win32api.SetCursorPos((x, y))
     
     while True:
         # ดึงภาพหน้าจอของเกม Minecraft ตามขอบเขตที่กำหนด
         game_screenshot = FindCV2EIEI(win,850,600)
+        # game_screenshot = np.array(ImageGrab.grab(bbox=(x, y, x + width, y + height)))
         bgr_screenshot = cv2.cvtColor(game_screenshot, cv2.COLOR_RGB2BGR)
        
         # ค้นหารูปภาพที่ต้องการบนหน้าจอ
@@ -100,11 +162,12 @@ try:
         min_val9, max_val9, min_loc9, max_loc9 = cv2.minMaxLoc(main_capcha)
 
         # โชว์จอเกม
-        # cv2.imshow('Minecraft Screenshot', bgr_screenshot)
+        cv2.imshow('Minecraft Screenshot', bgr_screenshot)
 
         if max_val9 >= 0.5:
             print("Found Capcha")
             ReleaseRightClick(x,y, win)
+            CapchaEIEI()
             time.sleep(2)
         elif max_val < 0.45:  # ตรวจสอบว่ารูปภาพไม่ถูกพบ
             print("Splashing not found. Right-clicking...")
