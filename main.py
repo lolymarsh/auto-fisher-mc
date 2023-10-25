@@ -16,7 +16,7 @@ def OneRightClick(x, y, win):
     MouseXY = win32api.MAKELONG(x, y)
     win32gui.SendMessage(win, win32con.WM_RBUTTONDOWN, win32con.MK_RBUTTON, MouseXY)
     win32gui.SendMessage(win, win32con.WM_RBUTTONUP, win32con.MK_RBUTTON, MouseXY)
-    
+
 def FindCV2EIEI(hwnd, width, height):
     try:
         wDC = win32gui.GetWindowDC(hwnd)
@@ -29,7 +29,7 @@ def FindCV2EIEI(hwnd, width, height):
 
         # Convert the screenshot to a NumPy array
         bmpstr = dataBitMap.GetBitmapBits(True)
-        image = np.fromstring(bmpstr, dtype='uint8')
+        image = np.frombuffer(bmpstr, dtype='uint8')
         image.shape = (height, width, 4)
 
         return image
@@ -39,6 +39,7 @@ def FindCV2EIEI(hwnd, width, height):
     finally:
         win32gui.ReleaseDC(hwnd, wDC)
         win32gui.DeleteObject(dataBitMap.GetHandle())
+
 
 try:
     for i in range(5, 0, -1):
