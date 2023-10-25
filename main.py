@@ -1,21 +1,44 @@
-import cv2, sys, numpy as np, time, win32gui, win32api, win32con
+import cv2, numpy as np, time, win32gui, win32api, win32con, win32ui
 from PIL import ImageGrab
 
 # ฟังก์ชันคลิกขวาค้าง
-def right_click_and_hold(x, y, win):
+def HoldRightClick(x, y, win):
     MouseXY = win32api.MAKELONG(x, y)
     win32gui.SendMessage(win, win32con.WM_RBUTTONDOWN, win32con.MK_RBUTTON, MouseXY)
 
 # ฟังก์ชันปล่อยคลิกขวาค้าง
-def release_right_click(x,y, win):
+def ReleaseRightClick(x,y, win):
     MouseXY = win32api.MAKELONG(x, y)
     win32gui.SendMessage(win, win32con.WM_RBUTTONUP, win32con.MK_RBUTTON, MouseXY)
 
 # ฟังก์ชันคลิกขวา
-def one_right_click(x, y, win):
+def OneRightClick(x, y, win):
     MouseXY = win32api.MAKELONG(x, y)
     win32gui.SendMessage(win, win32con.WM_RBUTTONDOWN, win32con.MK_RBUTTON, MouseXY)
     win32gui.SendMessage(win, win32con.WM_RBUTTONUP, win32con.MK_RBUTTON, MouseXY)
+    
+def FindCV2EIEI(hwnd, width, height):
+    try:
+        wDC = win32gui.GetWindowDC(hwnd)
+        dcObj = win32ui.CreateDCFromHandle(wDC)
+        cDC = dcObj.CreateCompatibleDC()
+        dataBitMap = win32ui.CreateBitmap()
+        dataBitMap.CreateCompatibleBitmap(dcObj, width, height)
+        cDC.SelectObject(dataBitMap)
+        cDC.BitBlt((0, 0), (width, height), dcObj, (0, 0), win32con.SRCCOPY)
+
+        # Convert the screenshot to a NumPy array
+        bmpstr = dataBitMap.GetBitmapBits(True)
+        image = np.fromstring(bmpstr, dtype='uint8')
+        image.shape = (height, width, 4)
+
+        return image
+    except Exception as e:
+        print(f"Error capturing screenshot: {str(e)}")
+        return None
+    finally:
+        win32gui.ReleaseDC(hwnd, wDC)
+        win32gui.DeleteObject(dataBitMap.GetHandle())
 
 try:
     for i in range(5, 0, -1):
@@ -45,7 +68,7 @@ try:
     
     while True:
         # ดึงภาพหน้าจอของเกม Minecraft ตามขอบเขตที่กำหนด
-        game_screenshot = np.array(ImageGrab.grab(bbox=(x, y, x + width, y + height)))
+        game_screenshot = FindCV2EIEI(win,850,600)
         bgr_screenshot = cv2.cvtColor(game_screenshot, cv2.COLOR_RGB2BGR)
        
         # ค้นหารูปภาพที่ต้องการบนหน้าจอ
@@ -80,37 +103,37 @@ try:
 
         if max_val9 >= 0.5:
             print("Found Capcha")
-            release_right_click(x,y, win)
+            ReleaseRightClick(x,y, win)
             time.sleep(2)
         elif max_val < 0.45:  # ตรวจสอบว่ารูปภาพไม่ถูกพบ
             print("Splashing not found. Right-clicking...")
-            release_right_click(x,y, win)
-            one_right_click(x,y, win)  # คลิกขวาหากไม่พบรูปภาพ
+            ReleaseRightClick(x,y, win)
+            OneRightClick(x,y, win)  # คลิกขวาหากไม่พบรูปภาพ
             time.sleep(1)  # รอสั้นๆ ก่อนที่จะค้นหาอีกครั้ง
         elif max_val2 >= 0.6:
             print("Found Fish Right-clicking...")
-            one_right_click(x,y, win)
+            OneRightClick(x,y, win)
             time.sleep(2)
             print("Starting Level 1 Right-clicking...")
-            right_click_and_hold(x,y, win)
+            HoldRightClick(x,y, win)
         elif max_val3 >= 0.6:
             print("Starting Level 2 Right-clicking...")
-            right_click_and_hold(x,y, win)
+            HoldRightClick(x,y, win)
         elif max_val4 >= 0.45:
             print("Found Redbar Level 1 Released Right-clicking...")
-            release_right_click(x,y, win)
+            ReleaseRightClick(x,y, win)
             time.sleep(3)
-            right_click_and_hold(x,y, win)
+            HoldRightClick(x,y, win)
         elif max_val5 >= 0.5:
             print("Found Redbar Level 2 Released Right-clicking...")
-            release_right_click(x,y, win)
+            ReleaseRightClick(x,y, win)
             time.sleep(3)
-            right_click_and_hold(x,y, win)
+            HoldRightClick(x,y, win)
         elif max_val6 >= 0.5:
             print("Found Redbar Level 3 Released Right-clicking...")
-            release_right_click(x,y, win)
+            ReleaseRightClick(x,y, win)
             time.sleep(3)
-            right_click_and_hold(x,y, win)
+            HoldRightClick(x,y, win)
 
         cv2.waitKey(1)
         
