@@ -53,8 +53,13 @@ def ClickLeftAtPoint(window, x, y):
     win32gui.SendMessage(window, win32con.WM_LBUTTONDOWN, win32con.MK_LBUTTON, ClickXY)
     time.sleep(0.1)  
     win32gui.SendMessage(window, win32con.WM_LBUTTONUP, 0, ClickXY)
+    move_x = x + max_loc2[0] 
+    move_y = y + max_loc2[1] - 25
+    BackToEIEI = win32api.MAKELONG(move_x, move_y)
+    win32gui.SendMessage(window,win32con.WM_MOUSEMOVE,None,BackToEIEI)
 
 def CapchaEIEI():
+    back_to = cv2.imread('./images/capcha/back_to.PNG')
     # รูปที่เจอ
     found_feather = cv2.imread('./images/capcha/found_feater.PNG')
     found_pufferfish = cv2.imread('./images/capcha/found_pufferfish.PNG')
@@ -263,6 +268,9 @@ def CapchaEIEI():
         
         click_fix_bamboo = cv2.matchTemplate(recapcha_bgr_screenshot, click_bamboo, cv2.TM_CCOEFF_NORMED)
         min_val50, max_val50, min_loc50, max_loc50 = cv2.minMaxLoc(click_fix_bamboo)
+
+        back_to_templates = cv2.matchTemplate(recapcha_bgr_screenshot, click_bamboo, cv2.TM_CCOEFF_NORMED)
+        min_val100, max_val100, min_loc100, max_loc100 = cv2.minMaxLoc(back_to_templates)
 
         if max_val1 >= 0.8:
             print("Found Feather")
