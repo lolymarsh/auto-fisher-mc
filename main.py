@@ -272,15 +272,15 @@ def CapchaEIEI():
 
         back_to_templates = cv2.matchTemplate(recapcha_bgr_screenshot, click_bamboo, cv2.TM_CCOEFF_NORMED)
         min_val100, max_val100, min_loc100, max_loc100 = cv2.minMaxLoc(back_to_templates)
-
-        if max_val1 >= 0.8:
+        print(max_val15)
+        if max_val1 >= 0.5:
             print("Found Feather")
             target_x = x + max_loc2[0] 
             target_y = y + max_loc2[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val3 >= 0.8:
+        if max_val3 >= 0.5:
             print("Found Pufferfish")
             target_x = x + max_loc4[0]
             target_y = y + max_loc4[1] - 25
@@ -289,160 +289,160 @@ def CapchaEIEI():
             win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
             print("Clicked...")
             time.sleep(2)
-        if max_val5 >= 0.8:
+        if max_val5 >= 0.5:
             print("Found Snowball")
             target_x = x + max_loc6[0] 
             target_y = y + max_loc6[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val7 >= 0.8:
+        if max_val7 >= 0.5:
             print("Found Honeycomb")
             target_x = x + max_loc8[0]
             target_y = y + max_loc8[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val9 >= 0.8:
+        if max_val9 >= 0.5:
             print("Found cake")
             target_x = x + max_loc10[0]
             target_y = y + max_loc10[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val11 >= 0.8:
+        if max_val11 >= 0.5:
             print("Found egg")
             target_x = x + max_loc12[0] 
             target_y = y + max_loc12[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val13 >= 0.8:
+        if max_val13 >= 0.5:
             print("Found potato")
             target_x = x + max_loc14[0]
             target_y = y + max_loc14[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val15 >= 0.8:
+        if max_val15 >= 0.5:
             print("Found beetroot")
             target_x = x + max_loc16[0] 
             target_y = y + max_loc16[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val17 >= 0.8:
+        if max_val17 >= 0.5:
             print("Found chicken")
             target_x = x + max_loc18[0] 
             target_y = y + max_loc18[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val19 >= 0.8:
+        if max_val19 >= 0.5:
             print("Found apple")
             target_x = x + max_loc20[0] 
             target_y = y + max_loc20[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val21 >= 0.8:
+        if max_val21 >= 0.5:
             print("Found bone")
             target_x = x + max_loc22[0]
             target_y = y + max_loc22[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val23 >= 0.8:
+        if max_val23 >= 0.5:
             print("Found brush")
             target_x = x + max_loc24[0] 
             target_y = y + max_loc24[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val25 >= 0.8:
+        if max_val25 >= 0.5:
             print("Found coal")
             target_x = x + max_loc26[0] 
             target_y = y + max_loc26[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val27 >= 0.8:
+        if max_val27 >= 0.5:
             print("Found spyglass")
             target_x = x + max_loc28[0] 
             target_y = y + max_loc28[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val29 >= 0.8:
+        if max_val29 >= 0.5:
             print("Found brick")
             target_x = x + max_loc30[0] 
             target_y = y + max_loc30[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val31 >= 0.8:
+        if max_val31 >= 0.5:
             print("Found cod")
             target_x = x + max_loc32[0] 
             target_y = y + max_loc32[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val33 >= 0.8:
+        if max_val33 >= 0.5:
             print("Found carrot")
             target_x = x + max_loc34[0] 
             target_y = y + max_loc34[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val35 >= 0.8:
+        if max_val35 >= 0.5:
             print("Found sugar")
             target_x = x + max_loc36[0] 
             target_y = y + max_loc36[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
-        if max_val37 >= 0.8:
+        if max_val37 >= 0.5:
             print("Found diamond")
             target_x = x + max_loc38[0] 
             target_y = y + max_loc38[1] - 5 
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val39 >= 0.8:
+        if max_val39 >= 0.5:
             print("Found emerald")
             target_x = x + max_loc40[0] 
             target_y = y + max_loc40[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val41 >= 0.8:
+        if max_val41 >= 0.5:
             print("Found redstone")
             target_x = x + max_loc42[0] 
             target_y = y + max_loc42[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val43 >= 0.8:
+        if max_val43 >= 0.5:
             print("Found book")
             target_x = x + max_loc44[0]
             target_y = y + max_loc44[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val45 >= 0.8:
+        if max_val45 >= 0.5:
             print("Found cookie")
             target_x = x + max_loc46[0] 
             target_y = y + max_loc46[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val47 >= 0.8:
+        if max_val47 >= 0.5:
             print("Found bucket")
             target_x = x + max_loc48[0] 
             target_y = y + max_loc48[1] - 25
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
-        if max_val49 >= 0.8:
+        if max_val49 >= 0.5:
             print("Found bamboo")
             target_x = x + max_loc50[0] 
             target_y = y + max_loc50[1] - 25
@@ -502,7 +502,7 @@ try:
         min_val9, max_val9, min_loc9, max_loc9 = cv2.minMaxLoc(main_capcha)
 
         # โชว์จอเกม
-        cv2.imshow('Minecraft Screenshot', bgr_screenshot)
+        # cv2.imshow('Minecraft Screenshot', bgr_screenshot)
 
         if max_val9 >= 0.5:
             print("Found Capcha")
