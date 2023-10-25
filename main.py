@@ -116,7 +116,8 @@ def CapchaEIEI():
 
     while True:
         # print("Searching...")
-        game_recapcha_screenshot = np.array(ImageGrab.grab(bbox=(x, y, x + width, y + height)))
+        game_recapcha_screenshot = FindCV2EIEI(win,850,600)
+        # game_recapcha_screenshot = np.array(ImageGrab.grab(bbox=(x, y, x + width, y + height)))
         recapcha_bgr_screenshot = cv2.cvtColor(game_recapcha_screenshot, cv2.COLOR_RGB2BGR)
 
         fix_feather = cv2.matchTemplate(recapcha_bgr_screenshot, found_feather, cv2.TM_CCOEFF_NORMED)
