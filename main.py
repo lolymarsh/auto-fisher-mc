@@ -115,7 +115,7 @@ def CapchaEIEI():
     click_bamboo = cv2.imread('./images/capcha/click_bamboo.PNG')
 
     while True:
-        # print("Searching...")
+        print("Searching...")
         game_recapcha_screenshot = FindCV2EIEI(win,850,600)
         # game_recapcha_screenshot = np.array(ImageGrab.grab(bbox=(x, y, x + width, y + height)))
         eiei_bg = cv2.cvtColor(game_recapcha_screenshot, cv2.COLOR_RGB2BGR)
@@ -509,7 +509,6 @@ try:
         if max_val9 >= 0.5:
             print("Found Capcha")
             ReleaseRightClick(x,y, win)
-            time.sleep(2)
             CapchaEIEI()
             time.sleep(2)
         elif max_val < 0.45:  # ตรวจสอบว่ารูปภาพไม่ถูกพบ
