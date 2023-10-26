@@ -53,10 +53,6 @@ def ClickLeftAtPoint(window, x, y):
     win32gui.SendMessage(window, win32con.WM_LBUTTONDOWN, win32con.MK_LBUTTON, ClickXY)
     time.sleep(0.1)  
     win32gui.SendMessage(window, win32con.WM_LBUTTONUP, 0, ClickXY)
-    move_x = x + max_loc2[0] 
-    move_y = y + max_loc2[1] - 25
-    BackToEIEI = win32api.MAKELONG(move_x, move_y)
-    win32gui.SendMessage(window,win32con.WM_MOUSEMOVE,None,BackToEIEI)
 
 def CapchaEIEI():
     back_to = cv2.imread('./images/capcha/back_to.PNG')
@@ -118,7 +114,7 @@ def CapchaEIEI():
         print("Searching...")
         game_recapcha_screenshot = FindCV2EIEI(win,850,600)
         # game_recapcha_screenshot = np.array(ImageGrab.grab(bbox=(x, y, x + width, y + height)))
-        recapcha_bgr_screenshot = cv2.cvtColor(game_recapcha_screenshot, cv2.COLOR_RGB2BGR)
+        recapcha_bgr_screenshot = cv2.cvtColor(game_recapcha_screenshot, cv2.COLOR_BGR2RGB)
 
         fix_feather = cv2.matchTemplate(recapcha_bgr_screenshot, found_feather, cv2.TM_CCOEFF_NORMED)
         min_val1, max_val1, min_loc1, max_loc1 = cv2.minMaxLoc(fix_feather)
@@ -270,9 +266,9 @@ def CapchaEIEI():
         click_fix_bamboo = cv2.matchTemplate(recapcha_bgr_screenshot, click_bamboo, cv2.TM_CCOEFF_NORMED)
         min_val50, max_val50, min_loc50, max_loc50 = cv2.minMaxLoc(click_fix_bamboo)
 
-        back_to_templates = cv2.matchTemplate(recapcha_bgr_screenshot, click_bamboo, cv2.TM_CCOEFF_NORMED)
+        back_to_templates = cv2.matchTemplate(recapcha_bgr_screenshot, back_to, cv2.TM_CCOEFF_NORMED)
         min_val100, max_val100, min_loc100, max_loc100 = cv2.minMaxLoc(back_to_templates)
-        print(max_val15)
+
         if max_val1 >= 0.5:
             print("Found Feather")
             target_x = x + max_loc2[0] 
@@ -403,7 +399,7 @@ def CapchaEIEI():
         if max_val37 >= 0.5:
             print("Found diamond")
             target_x = x + max_loc38[0] 
-            target_y = y + max_loc38[1] - 5 
+            target_y = y + max_loc38[1] - 25 
             ClickLeftAtPoint(win, target_x, target_y)
             print("Clicked...")
             time.sleep(2)
@@ -450,6 +446,10 @@ def CapchaEIEI():
             print("Clicked...")
             time.sleep(2)
         else:
+            move_x = x + max_loc2[0] 
+            move_y = y + max_loc2[1] - 25
+            BackToEIEI = win32api.MAKELONG(move_x, move_y)
+            win32gui.SendMessage(win,win32con.WM_MOUSEMOVE,None,BackToEIEI)
             break
 
 try:
@@ -472,7 +472,7 @@ try:
         # ดึงภาพหน้าจอของเกม Minecraft ตามขอบเขตที่กำหนด
         game_screenshot = FindCV2EIEI(win,850,600)
         # game_screenshot = np.array(ImageGrab.grab(bbox=(x, y, x + width, y + height)))
-        bgr_screenshot = cv2.cvtColor(game_screenshot, cv2.COLOR_RGB2BGR)
+        bgr_screenshot = cv2.cvtColor(game_screenshot, cv2.COLOR_BGR2RGB)
        
         # ค้นหารูปภาพที่ต้องการบนหน้าจอ
         result = cv2.matchTemplate(bgr_screenshot, template, cv2.TM_CCOEFF_NORMED)
